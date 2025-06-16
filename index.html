@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimal Prediction Market Trading Model</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
+</head>
+<body>
+    <h1>Optimal Prediction Market Trading Model</h1>
+    <p>This tool optimizes portfolio allocation across multiple prediction markets to maximize expected logarithmic wealth growth, based on the provided specification.</p>
+
+    <div class="container">
+        <div class="panel" id="inputs">
+            <h2>Inputs</h2>
+            <div class="form-group">
+                <label for="market-prices">Market Prices (P)</label>
+                <p class="desc">Comma-separated prices for 'YES' outcomes, e.g., 0.5, 0.3, 0.8</p>
+                <input type="text" id="market-prices" value="0.6, 0.25, 0.8">
+            </div>
+            <div class="form-group">
+                <label for="true-probs">True Probabilities (Y_prob)</label>
+                <p class="desc">Your estimated true probabilities for 'YES' outcomes, e.g., 0.7, 0.2, 0.75</p>
+                <input type="text" id="true-probs" value="0.75, 0.2, 0.9">
+            </div>
+            <div class="form-group">
+                <label for="initial-wealth">Initial Wealth (W)</label>
+                <input type="number" id="initial-wealth" value="1000">
+            </div>
+
+            <h3>Optimization Parameters</h3>
+            <div class="form-group">
+                <label for="learning-rate">Learning Rate</label>
+                <!-- *** THIS LINE IS CHANGED *** -->
+                <input type="number" id="learning-rate" value="0.01" step="0.001">
+            </div>
+            <div class="form-group">
+                <label for="iterations">Iterations</label>
+                <input type="number" id="iterations" value="500" step="100">
+            </div>
+            <div class="form-group">
+                <label for="batch-size">Batch Size (B)</label>
+                <p class="desc">Number of simulations per iteration for Monte Carlo estimation.</p>
+                <input type="number" id="batch-size" value="1024" step="128">
+            </div>
+            <button id="run-optimization">Run Optimization</button>
+        </div>
+
+        <div class="panel" id="outputs">
+            <h2>Optimal Portfolio</h2>
+            <div id="results-summary">
+                <p>Run optimization to see results.</p>
+            </div>
+            <table id="results-table">
+                <thead>
+                    <tr>
+                        <th>Event #</th>
+                        <th>Net Shares (Yes/No)</th>
+                        <th>Capital Allocated ($)</th>
+                        <th>α_yes</th>
+                        <th>α_no</th>
+                    </tr>
+                </thead>
+                <tbody id="results-tbody">
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="log-panel">
+        <h2>Optimization Log</h2>
+        <pre id="log-console"></pre>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
